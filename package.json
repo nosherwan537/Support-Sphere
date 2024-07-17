@@ -9,13 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.15.0",
+    "axios": "^1.7.2",
     "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "googleapis": "^140.0.1",
     "mongoose": "^8.4.1",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tough-cookie": "^4.1.4",
+    "xml2js": "^0.6.2",
+    "youtube-search": "^1.1.2"
   },
   "devDependencies": {
     "eslint": "^8",

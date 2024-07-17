@@ -35,10 +35,12 @@ const Dashboard = () => {
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+        console.log(form); // Log the form data
         try {
             let response = await updateProfile(
                 new FormData(e.target),
-                session.user.name
+                session.user.email.split("@")[0]
             );
             if (response.error) {
                 alert(response.error);
@@ -74,35 +76,19 @@ const Dashboard = () => {
                     onChange={handleChange}
                 />
                 <input
-                    type="tel"
+                    type="text"
                     className="rounded-lg p-3 text-black"
-                    placeholder="Phone"
-                    name="phone"
-                    value={form.phone || ""}
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    className="rounded-lg p-3"
-                    placeholder="Nationality"
-                    name="nationality"
-                    value={form.nationality || ""}
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    className="rounded-lg p-3"
                     placeholder="Profile Pic URL"
-                    name="profilePic"
-                    value={form.profilePic || ""}
+                    name="profilePicture"
+                    value={form.profilePicture || ""}
                     onChange={handleChange}
                 />
                 <input
                     type="text"
-                    className="rounded-lg p-3"
+                    className="rounded-lg p-3 text-black"
                     placeholder="Cover Pic URL"
-                    name="coverPic"
-                    value={form.coverPic || ""}
+                    name="coverPicture"
+                    value={form.coverPicture || ""}
                     onChange={handleChange}
                 />
                 <button type="submit" className="bg-slate-600 rounded-lg p-4">

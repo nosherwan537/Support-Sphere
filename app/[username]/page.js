@@ -1,30 +1,40 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import "../utility.css";
+import { fetchuser } from "@/actions/useractions"; // Ensure you have this action
 
 const Username = ({ params }) => {
     const { data: session } = useSession();
     const router = useRouter();
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         if (!session) {
             router.push("/login");
+        } else {
+            getUserData();
         }
     }, [session, router]);
 
+    const getUserData = async () => {
+        try {
+            const username = session.user.name || session.user.email.split("@")[0];
+            const userData = await fetchuser(username);
+            setUser(userData);
+        } catch (error) {
+            console.error("Failed to fetch user data", error);
+        }
+    };
+
     return (
         <>
-            {params.username}
             <div className="min-h-screen flex flex-col items-center">
                 <div className="flex justify-center mt-2">
                     <Image
-                        src={
-                            session?.user?.coverPic ||
-                            "/resources/batman-1.avif"
-                        }
+                        src={user?.coverPicture || "/resources/batman-1.avif"}
                         alt="Cover Image"
                         width={800}
                         height={300}
@@ -34,10 +44,7 @@ const Username = ({ params }) => {
                 <div className="text-white flex flex-col justify-center items-center text-center p-2 montserrat-regular text-lg w-full">
                     <div className="mb-4">
                         <Image
-                            src={
-                                session?.user?.profilePic ||
-                                "/resources/joke.jpg"
-                            }
+                            src={user?.profilePicture || "/resources/joke.jpg"}
                             alt="Profile Image"
                             width={100}
                             height={100}
